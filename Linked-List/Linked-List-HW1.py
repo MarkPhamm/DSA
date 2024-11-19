@@ -35,26 +35,44 @@ class LinkedList():
     
     # search(int val): Searches for a node with the specified value in O(n) time.
     def search(self, val: int) -> None:
-        pass
+        dummy = ListNode()
+        dummy.next = self.head 
+        cur = dummy
+        
+        while cur:
+            if cur.val == val:
+                return True
+            cur = cur.next
+        
+        return False
 
     # remove(int val): Removes the first node with the specified value in O(n) time.
     #   (If multiple nodes have the same value, remove the first one found.)
     def remove(self, val: int) -> None:
         dummy = ListNode()
         dummy.next = self.head
-        cur = dummy.next 
+        cur = dummy.next
         prev = dummy 
 
         while cur:
             if cur.val == val:
-                prev.next = prev.next.next 
+                prev.next = cur.next 
+                self.head = dummy.next
+                self.size -=1
+                break
             cur = cur.next
             prev = prev.next
         
-
+        print(F"Can't found {val} in Linked List")
+        
     # getSize(): Returns the size of the linked list in O(1) time.
     def getSize(self):
         return self.size
+    
+    # removeAll(): Remove all the nodes in the list in O(1) time
+    def removeAll(self):
+        self.head = None
+        self.size = 0
     
     # removeFirst(): Removes the first node in O(1) time.
     def removeFirst(self):
@@ -83,8 +101,6 @@ class LinkedList():
             cur = cur.next
 
         self.size -=1
-
-    # removeAll(): remove all the elements in O(n)
     
     # print(): print the linked list
     def print(self):
@@ -100,7 +116,19 @@ class LinkedList():
 
 def main():    
     # Test addFirst
-    submit = True
+    ll = LinkedList()
+    ll.addFirst(5)
+    ll.addLast(6)
+    ll.remove(5)
+    ll.print()
+    ll.removeAll()
+    ll.print()
+    ll.removeAll()
+    ll.addLast(5)
+    print(ll.search(5))
+    ll.print()
+
+    submit = True  # Set to True to run additional test cases
     
     if submit:
         ll = LinkedList()
@@ -132,6 +160,23 @@ def main():
         ll.removeLast()
         assert ll.getSize() == 2, "Test Case 4 Failed"
         ll.print()  # Expected: 5-->6-->None
+
+        # Additional Test Cases
+        ll.addFirst(30)
+        assert ll.getSize() == 3, "Test Case 5 Failed"
+        ll.print()  # Expected: 30-->5-->6-->None
+
+        ll.addLast(40)
+        assert ll.getSize() == 4, "Test Case 6 Failed"
+        ll.print()  # Expected: 30-->5-->6-->40-->None
+
+        ll.remove(5)
+        assert ll.getSize() == 3, "Test Case 7 Failed"
+        ll.print()  # Expected: 30-->6-->40-->None
+
+        ll.removeAll()
+        assert ll.getSize() == 0, "Test Case 8 Failed"
+        ll.print()  # Expected: None
 
         print("All test cases passed!")
 
