@@ -6,37 +6,29 @@ class ListNode():
 class LinkedList():
     # Initialize the Linked List
     def __init__(self) -> None:
-        self.head = None 
-        self.size = 0
         self.dummyhead = ListNode()
-        self.last = None
-    
+        self.head = None 
+        self.root = None
+        self.prev = None
+        self.size = 0
+
     # Operations:
     # addFirst(Node newNode): Adds a node to the beginning of the list in O(1) time.
     def addFirst(self, val: int) -> None:
-        first = self.dummyhead.next 
         new_node = ListNode(val)
+        first = self.dummyhead.next 
         self.dummyhead.next = new_node
         new_node.next = first
-    
-    # addLast(Node newNode): Adds a node to the end of the list in O(1) time.
-    # (Hint: Keep track of the last node.)
+        self.size +=1 
+        self.root = new_node
+
+    # addLast(Node newNode): Adds a node to the end of the list in O(1) time. # (Hint: Keep track of the last node.)
     def addLast(self, val: int) -> None: 
-        if self.head is None: 
-            self.addFirst(val)
-        else:
-            dummy = ListNode()
-            dummy.next = self.head
-            cur = dummy
+        new_node = ListNode(val)
+        self.root.next = new_node
+        self.size +=1
+        self.root = new_node
 
-            while cur.next:
-                cur = cur.next 
-            
-            cur.next = ListNode(val, None)
-            
-            self.size +=1
-
-    
     # search(int val): Searches for a node with the specified value in O(n) time.
     def search(self, val: int) -> None:
         cur = self.dummyhead
@@ -89,21 +81,8 @@ class LinkedList():
     
     # removeLast(): Removes the last node in O(1) time.
     def removeLast(self):
-        dummy = ListNode()
-        dummy.next = self.head
-        cur = dummy 
-        
-        count = 0
-        size = self.getSize()
+        pass
 
-        while cur.next:
-            if count == size - 1:
-                cur.next = None
-                break
-            count += 1
-            cur = cur.next
-
-        self.size -=1
     
     # print(): print the linked list
     def print(self):
@@ -123,8 +102,11 @@ def main():
     ll.addFirst(5)
     ll.addFirst(4)
     ll.remove(5)
+    ll.addLast(2)
+    ll.addLast(3)
     print(ll.search(5))
     ll.print()
+    print(ll.prev)
 
     submit = False  # Set to True to run additional test cases
     
